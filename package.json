@@ -1,0 +1,17 @@
+{
+  "author": "David Björklund <david.bjorklund@gmail.com>",
+  "name": "resourceful-riak",
+  "description": "Riak engine to the resourceful model framework",
+  "version": "0.0.1",
+  "main": "index.js",
+  "devDependencies": {
+    "resourceful": ">=0.0.1",
+    "vows": "0.5.x >=0.5.11"
+  },
+  "dependencies": {
+    "riak-js": "~0.4.1"
+  },
+  "scripts": {
+    "test": "vows --spec -i"
+  }
+}
