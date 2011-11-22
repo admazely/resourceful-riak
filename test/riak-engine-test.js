@@ -221,11 +221,22 @@ vows.describe('resourceful/engines/database').addVows({
         
         this.user.save(this.callback);
       },
-      "should save the object in cache": function(e, res) {
+      "[in cache] should save the object": function() {
         var obj = this.Factory.connection.cache.store['David'];
         assert.isObject(obj);
         assert.equal(obj._id, 'David');
         assert.equal(obj.age, 26);
+      },
+      "[in database]": {
+        topic: function() {
+          var db = riak.getClient();
+          db.get('test', 'David', this.callback);
+        },
+        "should create object": function(e, obj) {
+          assert.isNull(e);
+          assert.isObject(obj);
+          assert.equal(obj.age, 26);
+        }
       }
     }
   }
@@ -240,9 +251,19 @@ vows.describe('resourceful/engines/database').addVows({
       topic: function(r) {
         r.destroy("David", this.callback);
       },
-      "should delete the object in the cache": function(e, res) {
+      "[in cache] should delete the object": function(e, res) {
         assert.isUndefined(this.Factory.connection.cache.store['David']);
       },
+      "[in database]": {
+        topic: function() {
+          var db = riak.getClient();
+          db.exists('test', 'David', this.callback);
+        },
+        "should delete object": function(e, res) {
+          assert.isNull(e);
+          assert.isFalse(res);
+        }
+      }
     }
   }
 }).export(module);
