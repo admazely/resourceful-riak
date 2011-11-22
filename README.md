@@ -19,7 +19,7 @@ This is the example from resourceful, adapted to work with resourceful-riak.
     // Specify a storage engine
     //
     this.use('riak', {
-      bucket: creatures // bucket must always be set when using the riak engine
+      bucket: "creatures" // bucket must always be set when using the riak engine
     });
     
     //
