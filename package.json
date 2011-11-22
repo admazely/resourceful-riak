@@ -6,7 +6,8 @@
   "main": "index.js",
   "devDependencies": {
     "resourceful": ">=0.0.1",
-    "vows": "0.5.x >=0.5.11"
+    "vows": "0.5.x >=0.5.11",
+    "async": "~0.1.15"
   },
   "dependencies": {
     "riak-js": "~0.4.1"
