@@ -33,7 +33,16 @@ Riak.prototype.update = function(key, val, callback) {
 }
 
 Riak.prototype.all = function(callback) {
-  this.db.getAll(this.bucket, callback);
+  this.db.getAll(this.bucket, function(e, all) {
+    if(e) {
+      callback(e);
+    } else {
+      var models = all.map(function(obj) {
+        return obj.data;
+      });
+      callback(null, models);
+    }
+  });
 }
 
 Riak.prototype.destroy = function(key, callback) {
