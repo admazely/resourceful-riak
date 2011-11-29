@@ -20,8 +20,12 @@ Riak.prototype.save = function (key, val, callback) {
 
 Riak.prototype.get = function (key, callback) {
   this.db.get(this.bucket, key, {}, function(e, value, meta) {
-    value._id = meta.key;
-    callback(e, value);
+    if(e) {
+      callback(e);
+    } else {
+      value._id = meta.key;
+      callback(e, value);
+    }
   });
 }
 
