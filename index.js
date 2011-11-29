@@ -7,7 +7,7 @@ var Riak = resourceful.engines.Riak = function(config) {
     throw new Error('bucket must be set in the config for each model.')
   }
 
-  this.db = require('riak-js').getClient(config);
+  this.client = require('riak-js').getClient(config);
   
   this.cache = new resourceful.Cache();
 }
@@ -20,7 +20,7 @@ Riak.prototype.save = function (key, value, callback) {
   if(!callback) {
     callback = value;
     value = key;
-    this.db.save(this.bucket, null, value, {}, function(e, _, meta) {
+    this.client.save(this.bucket, null, value, {}, function(e, _, meta) {
       if(e) {
         callback(e);
       } else {
@@ -30,12 +30,12 @@ Riak.prototype.save = function (key, value, callback) {
       }
     });
   } else {
-    this.db.save(this.bucket, key, value, {}, callback);
+    this.client.save(this.bucket, key, value, {}, callback);
   }
 };
 
 Riak.prototype.get = function (key, callback) {
-  this.db.get(this.bucket, key, {}, function(e, value, meta) {
+  this.client.get(this.bucket, key, {}, function(e, value, meta) {
     if(e) {
       callback(e);
     } else {
@@ -53,7 +53,7 @@ Riak.prototype.update = function(key, val, callback) {
 }
 
 Riak.prototype.all = function(callback) {
-  this.db.getAll(this.bucket, function(e, all) {
+  this.client.getAll(this.bucket, function(e, all) {
     if(e) {
       callback(e);
     } else {
@@ -66,5 +66,5 @@ Riak.prototype.all = function(callback) {
 }
 
 Riak.prototype.destroy = function(key, callback) {
-  this.db.remove(this.bucket, key, callback);
+  this.client.remove(this.bucket, key, callback);
 }
