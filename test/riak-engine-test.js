@@ -238,6 +238,35 @@ vows.describe('resourceful/engines/database').addVows({
           assert.equal(obj.age, 26);
         }
       }
+    },
+    "a save() request (without id)": {
+      topic: function(r) {
+        this.user2 = new this.Factory({
+          name: 'David',
+          age: 26
+        });
+        
+        this.user2.save(this.callback);
+      },
+      "[in cache] should save the object": function(res) {
+        var id = res._id;
+        var obj = this.Factory.connection.cache.store[id];
+        assert.isObject(obj);
+        assert.equal(obj._id, res._id);
+        assert.equal(obj.name, 'David');
+        assert.equal(obj.age, 26);
+      },
+      "[in database]": {
+        topic: function() {
+          var db = riak.getClient();
+          db.get('test', 'David', this.callback);
+        },
+        "should create object": function(e, obj) {
+          assert.isNull(e);
+          assert.isObject(obj);
+          assert.equal(obj.age, 26);
+        }
+      }
     }
   }
 }).addBatch({

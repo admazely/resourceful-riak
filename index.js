@@ -14,8 +14,24 @@ var Riak = resourceful.engines.Riak = function(config) {
 
 Riak.prototype.protocol = 'riak';
 
-Riak.prototype.save = function (key, val, callback) {
-  this.db.save(this.bucket, key, val, {}, callback);
+Riak.prototype.save = function (key, value, callback) {
+  var that = this;
+
+  if(!callback) {
+    callback = value;
+    value = key;
+    this.db.save(this.bucket, null, value, {}, function(e, _, meta) {
+      if(e) {
+        callback(e);
+      } else {
+        value._id = meta.key;
+        that.cache.put(value._id, value);
+        callback(null, value);
+      }
+    });
+  } else {
+    this.db.save(this.bucket, key, value, {}, callback);
+  }
 };
 
 Riak.prototype.get = function (key, callback) {
