@@ -2,7 +2,7 @@
   "author": "David Björklund <david.bjorklund@gmail.com>",
   "name": "resourceful-riak",
   "description": "Riak engine to the resourceful model framework",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "devDependencies": {
     "resourceful": ">=0.0.1",
