@@ -7,7 +7,7 @@ var Riak = resourceful.engines.Riak = function(config) {
     throw new Error('bucket must be set in the config for each model.')
   }
 
-  this.client = require('riak-js').getClient(config);
+  this.client = config.client || require('riak-js').getClient(config);
   
   this.cache = new resourceful.Cache();
 }
