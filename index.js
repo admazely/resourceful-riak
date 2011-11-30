@@ -20,18 +20,17 @@ Riak.prototype.save = function (key, value, callback) {
   if(!callback) {
     callback = value;
     value = key;
-    this.client.save(this.bucket, null, value, {}, function(e, _, meta) {
-      if(e) {
-        callback(e);
-      } else {
-        value._id = meta.key;
-        that.cache.put(value._id, value);
-        callback(null, value);
-      }
-    });
-  } else {
-    this.client.save(this.bucket, key, value, {}, callback);
+    key = null;
   }
+  this.client.save(this.bucket, key, value, {}, function(e, _, meta) {
+    if(e) {
+      callback(e);
+    } else {
+      value._id = meta.key;
+      that.cache.put(value._id, value);
+      callback(null, value);
+    }
+  });
 };
 
 Riak.prototype.get = function (key, callback) {
