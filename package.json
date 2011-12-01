@@ -14,5 +14,9 @@
   },
   "scripts": {
     "test": "vows --spec -i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/admazely/resourceful-riak.git"
   }
 }
