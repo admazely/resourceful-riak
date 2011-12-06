@@ -1,4 +1,5 @@
-#resourceful-riak
+#resourceful-riak [![Build Status](https://secure.travis-ci.org/admazely/resourceful-riak.png)](http://travis-ci.org/admazely/resourceful-riak)
+
 
 A Riak engine to the [resourceful](https://github.com/flatiron/resourceful/) model framework from [flatiron](https://github.com/flatiron/).
 
